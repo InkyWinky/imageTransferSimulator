@@ -16,16 +16,14 @@ def receive_images_from_server(server_ip, server_port):
 
     while True:
         try:
-            print('inside main loop')
             # Receive image data from the client
             image_data = b''
             while True:
                 chunk = client_socket.recv(CHUNK_SIZE)
                 if chunk.endswith(EOF_IMAGE):
-                    print("end of image reached")
                     break
                 image_data += chunk
-            print('displaying image')
+
             # Convert image data to OpenCV format
             nparr = np.frombuffer(image_data, np.uint8)
             image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -34,7 +32,6 @@ def receive_images_from_server(server_ip, server_port):
             cv2.imshow('Received Image', image)
             if cv2.waitKey(1) & 0xFF == ord('q'):  # Exit loop if 'q' is pressed
                 break
-            print('finished displaying image')
         except Exception as e:
             print("Error receiving image:", e)
             break

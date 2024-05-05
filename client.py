@@ -201,6 +201,7 @@ class MainWindow(QMainWindow):
             print("Invalid values.")
         fps = calculate_fps(self.pixel_height, self.focal_length,self.working_dist, self.train_speed, self.image_height)
         self.label_13.setText(str(fps))
+        QApplication.processEvents()
         time.sleep(1)
         start_sending_images(self.client, fps)
 def calculate_fps(ph, fl, wd, spd, ih):
